@@ -14,44 +14,46 @@ int main(int argc, char** argv)
     /*Чтение из файла*/
     if (!FileIn.is_open()) {
         std::cout << "Файл не открылся!" << std::endl;
-        return 0;
+        return 1;
     }
 
     //Чтение 1ого массива
     if (!(FileIn >> SizeFirstArr)) {
         std::cout << "Размер первого массива не считался!" << std::endl;
-        return 0;
+        return 1;
     }
 
-    if (SizeFirstArr == 0 || SizeFirstArr < 0) {
+    if (SizeFirstArr <= 0) {
         std::cout << "Размер массива не может быть меньше или равен нулю..." << std::endl;
-        return 0;
+        return 1;
     }
 
-    int* FirstArr = new int[SizeFirstArr] {false};
+    int* FirstArr = new int[SizeFirstArr] {};
 
     for (int i = 0; i < SizeFirstArr; ++i) {
         if (!(FileIn >> FirstArr[i])) {
             std::cout << i << " элемент первого массива не считался!" << std::endl;
+            return 1;
         }
     }
 
     //Чтение 2ого массива
     if (!(FileIn >> SizeSecondArr)) {
         std::cout << "Размер второго массива не считался!" << std::endl;
-        return 0;
+        return 1;
     }
 
-    if (SizeSecondArr == 0 || SizeSecondArr < 0) {
+    if (SizeSecondArr <= 0) {
         std::cout << "Размер массива не может быть меньше или равен нулю..." << std::endl;
-        return 0;
+        return 1;
     }
 
-    int* SecondArr = new int[SizeSecondArr] {false};
+    int* SecondArr = new int[SizeSecondArr] {};
 
     for (int i = 0; i < SizeSecondArr; ++i) {
         if (!(FileIn >> SecondArr[i])) {
             std::cout << i << " элемент второго массива не считался!" << std::endl;
+            return 1;
         }
     }
 
@@ -62,7 +64,7 @@ int main(int argc, char** argv)
     FileOut << SizeSecondArr << std::endl;
     for (int i = 0; i < SizeSecondArr; ++i) {
         if (!i) { 
-            FileOut << SecondArr[SizeSecondArr - 1] << " "; 
+            FileOut << SecondArr[SizeSecondArr - 1] << (i < SizeSecondArr - 1 ? " " : "\n"); 
         }
         else {
             FileOut << SecondArr[i - 1] << (i < SizeSecondArr - 1 ? " " : "\n");
